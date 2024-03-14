@@ -10,7 +10,7 @@ const Registration = () => {
           <h1 style={{background:"red"}}>xs=8</h1>
         </Grid>
         <Grid h1 xs={6}>
-            <Images src={registrationImg}/>
+            <Images src={registrationImg} alt="how are you bhai?" className="w-[100%] h-[100vh] object-cover"/>
         </Grid>
       </Grid>
   );
