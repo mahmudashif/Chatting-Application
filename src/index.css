@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*-------------- css for registration part --------------*/
+
+.css-1u3bzj6-MuiFormControl-root-MuiTextField-root{
+    width: 368px;
+    height: 104px;
+}
+
+.css-jh47zj-MuiButtonBase-root-MuiButton-root{
+    height: 68px;
+    width: 368px;
+}
+
+/*-------------- css for registration part end --------------*/
