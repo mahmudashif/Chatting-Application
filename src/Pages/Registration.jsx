@@ -1,11 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Images from "../Images";
 import registrationImg from "../assets/registrationImage.png";
 import TextField from "@mui/material/TextField";
 import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
 
 const Registration = () => {
+
+  let [registerData,setRegisterData] = useState({
+    email: "",
+    name: "",
+    password: ""
+  });
+
+  let handleChange = (e)=>{
+    setRegisterData({...registerData,[e.target.name]:e.target.value})
+    console.log(registerData);
+  }
+
+  let handleSubmit = ()=>{
+    if (!setRegisterData.email) {
+      
+    }
+  }
+
+
+
   return (
     <Grid container>
       <Grid h1 xs={6}>
@@ -14,29 +35,38 @@ const Registration = () => {
         </h1>
         <div className="pt-[81px] pl-[193px]">
         <TextField
+          name="email"
           id="outlined-basic"
           label="Email Address"
           variant="outlined"
+          onChange={handleChange}
         />
+        <Alert severity="error">Email Required.</Alert>
         </div>
         <div className="pt-[33px] pl-[193px]">
         <TextField
+          name="name"
           required
           id="outlined-required"
           label="Full Name"
           defaultValue=""
+          onChange={handleChange}
         />
+          <Alert severity="error">Name Required.</Alert>
         </div>
         <div className="pt-[33px] pl-[193px]">
         <TextField
+          name="password"
           id="outlined-password-input"
           label="Password"
           type="password"
           autoComplete="current-password"
+          onChange={handleChange}
         />
+        <Alert severity="error">Password Required.</Alert>
         </div>
         <div className="pt-[33px] pl-[193px]">
-        <Button variant="contained" size="large">
+        <Button onClick={handleSubmit} variant="contained" size="large">
           Sign Up
         </Button>
         </div>
