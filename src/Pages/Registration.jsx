@@ -19,15 +19,31 @@ const Registration = () => {
     password: "",
   });
 
-
   let handleChange = (e) => {
-    setRegisterData({ ...registerData, [e.target.name]: e.target.value, });
-    setRegisterError({...registerError, email: ""})
+    setRegisterData({ ...registerData, [e.target.name]: e.target.value });
+    setRegisterError({ ...registerError, [e.target.name]: "" });
+    // setRegisterData({ ...registerData, [e.target.name]: e.target.value, });
+    // setRegisterError({...registerError, name: ""})
+    // setRegisterData({ ...registerData, [e.target.name]: e.target.value, });
+    // setRegisterError({...registerError, password: ""})
   };
 
   let handleSubmit = () => {
+    let pattern = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/;
+
     if (!registerData.email) {
       setRegisterError({ ...registerError, email: "Email Required" });
+    }
+    else if(!pattern.test(registerData.email)){
+      setRegisterError({ ...registerError, email: "Valid Email Required" });
+    }
+    else if (!registerData.name) {
+      setRegisterError({ ...registerError, name: "Name Required" });
+    } else if (!registerData.password) {
+      setRegisterError({ ...registerError, password: "Password Required" });
+    }
+    else if(registerData.password.length <6){
+      setRegisterError({...registerError,password: "Password must be greater then 6 Character"})
     }
   };
 
@@ -44,10 +60,10 @@ const Registration = () => {
             label="Email Address"
             variant="outlined"
             onChange={handleChange}
-            />
-            {registerError.email && 
-              <Alert severity="error">{registerError.email}</Alert>
-            }
+          />
+          {registerError.email && (
+            <Alert severity="error">{registerError.email}</Alert>
+          )}
         </div>
         <div className="pt-[33px] pl-[193px]">
           <TextField
@@ -58,7 +74,9 @@ const Registration = () => {
             defaultValue=""
             onChange={handleChange}
           />
-          <Alert severity="error">Name Required</Alert>
+          {registerError.name && (
+            <Alert severity="error">{registerError.name}</Alert>
+          )}
         </div>
         <div className="pt-[33px] pl-[193px]">
           <TextField
@@ -69,7 +87,9 @@ const Registration = () => {
             autoComplete="current-password"
             onChange={handleChange}
           />
-          <Alert severity="error">Password Required.</Alert>
+          {registerError.password && (
+            <Alert severity="error">{registerError.password}</Alert>
+          )}
         </div>
         <div className="pt-[33px] pl-[193px]">
           <Button onClick={handleSubmit} variant="contained" size="large">
