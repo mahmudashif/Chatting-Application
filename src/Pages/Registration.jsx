@@ -6,9 +6,9 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { RotatingTriangles } from "react-loader-spinner";
 
 const Registration = () => {
-
   const auth = getAuth();
 
   let [registerData, setRegisterData] = useState({
@@ -22,6 +22,8 @@ const Registration = () => {
     name: "",
     password: "",
   });
+
+  let [loading, setLoading] = useState(false);
 
   let handleChange = (e) => {
     setRegisterData({ ...registerData, [e.target.name]: e.target.value });
@@ -37,32 +39,38 @@ const Registration = () => {
 
     if (!registerData.email) {
       setRegisterError({ ...registerError, email: "Email Required" });
-    }
-    else if(!pattern.test(registerData.email)){
+    } else if (!pattern.test(registerData.email)) {
       setRegisterError({ ...registerError, email: "Valid Email Required" });
-    }
-    else if (!registerData.name) {
+    } else if (!registerData.name) {
       setRegisterError({ ...registerError, name: "Name Required" });
     } else if (!registerData.password) {
       setRegisterError({ ...registerError, password: "Password Required" });
-    }
-    else if(registerData.password.length <6){
-      setRegisterError({...registerError,password: "Password must be greater then 6 Character"})
-    }
-    else{
-      createUserWithEmailAndPassword(auth, registerData.email, registerData.password)
-  .then((userCredential) => {
-    // Signed up 
-    // const user = userCredential.user;
-    // ...
-    console.log("got it",userCredential);
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(error);
-    // ..
-  });
+    } else if (registerData.password.length < 6) {
+      setRegisterError({
+        ...registerError,
+        password: "Password must be greater then 6 Character",
+      });
+    } else {
+      setLoading(true);
+      createUserWithEmailAndPassword(
+        auth,
+        registerData.email,
+        registerData.password
+      )
+        .then((userCredential) => {
+          setLoading(false);
+          // Signed up
+          // const user = userCredential.user;
+          // ...
+          console.log("got it", userCredential);
+        })
+        .catch((error) => {
+          setLoading(false);
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(error);
+          // ..
+        });
     }
   };
 
@@ -80,6 +88,7 @@ const Registration = () => {
             variant="outlined"
             onChange={handleChange}
           />
+
           {registerError.email && (
             <Alert severity="error">{registerError.email}</Alert>
           )}
@@ -111,9 +120,26 @@ const Registration = () => {
           )}
         </div>
         <div className="pt-[33px] pl-[193px]">
-          <Button onClick={handleSubmit} variant="contained" size="large">
-            Sign Up
-          </Button>
+          {!loading && (
+            <Button
+              disabled={false}
+              onClick={handleSubmit}
+              variant="contained"
+              size="large"
+            >
+              Sign Up
+              
+            </Button>
+          )}
+          {loading && (
+            <RotatingTriangles
+              visible={true}
+              height="80"
+              width="80"
+              color="#4fa94d"
+              ariaLabel="rotating-triangles-loading"
+            />
+          )}
         </div>
         <div className="font-bold text-[13.34px] pt-8 pl-[193px]">
           <p>
