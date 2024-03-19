@@ -6,8 +6,11 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import { FcGoogle } from "react-icons/fc";
+import { ColorRing } from "react-loader-spinner";
 
 const Registration = () => {
+  let [loading, setLoading] = useState(false);
+
   let [registerData, setRegisterData] = useState({
     email: "",
     password: "",
@@ -71,9 +74,24 @@ const Registration = () => {
           )}
         </div>
         <div className="pt-[33px] pl-[193px]">
+          {!ColorRing &&
           <Button onClick={handleSubmit} variant="contained" size="large">
             Login to Continue
           </Button>
+          }
+            {ColorRing &&
+          <div className="loader">
+          <ColorRing
+          visible={true}
+          height="80"
+          width="80"
+          ariaLabel="color-ring-loading"
+          wrapperStyle={{}}
+          wrapperClass="color-ring-wrapper"
+          colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+          />
+          </div>
+        }
         </div>
         <div className="font-bold text-[13.34px] pt-8 pl-[193px]">
           <p>

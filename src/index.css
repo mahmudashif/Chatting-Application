@@ -18,6 +18,10 @@
     display: inline-flex !important;
 }
 
+.loader{
+    margin-left: 150px;
+}
+
 /*-------------- css for registration part end --------------*/
 
 /* -------------css for login part-------------- */
@@ -29,14 +33,3 @@
     margin-top: 20px !important;
 }
 
-/* .btn{
-    margin-left: 190px;
-    background-color: pink;
-    padding: 20px;
-    color: red;
-    text-transform: capitalize;
-    font-size: 30px;
-    font-weight: bold;
-    border-radius: 5px;
-    border: 2px solid blue;
-} */

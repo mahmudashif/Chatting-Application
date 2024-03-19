@@ -5,8 +5,9 @@ import registrationImg from "../assets/registrationImage.png";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword,sendEmailVerification  } from "firebase/auth";
 import { RotatingTriangles } from "react-loader-spinner";
+import { toast } from 'react-toastify';
 
 const Registration = () => {
   const auth = getAuth();
@@ -59,16 +60,21 @@ const Registration = () => {
       )
         .then((userCredential) => {
           setLoading(false);
+          sendEmailVerification(auth.currentUser)
+  .then(() => {
+    // Email verification sent!
+    // ...
+  });
+          // toast("Please Check your mail")
+          toast('Please Check your mail')
           // Signed up
           // const user = userCredential.user;
           // ...
-          console.log("got it", userCredential);
         })
         .catch((error) => {
           setLoading(false);
           const errorCode = error.code;
           const errorMessage = error.message;
-          console.log(error);
           // ..
         });
     }
@@ -128,18 +134,19 @@ const Registration = () => {
               size="large"
             >
               Sign Up
-              
             </Button>
           )}
-          {loading && (
-            <RotatingTriangles
-              visible={true}
-              height="80"
-              width="80"
-              color="#4fa94d"
-              ariaLabel="rotating-triangles-loading"
-            />
-          )}
+          <div className="loader">
+            {loading && (
+              <RotatingTriangles
+                visible={true}
+                height="80"
+                width="80"
+                color="#4fa94d"
+                ariaLabel="rotating-triangles-loading"
+              />
+            )}
+          </div>
         </div>
         <div className="font-bold text-[13.34px] pt-8 pl-[193px]">
           <p>
