@@ -5,8 +5,12 @@ import registrationImg from "../assets/registrationImage.png";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const Registration = () => {
+
+  const auth = getAuth();
+
   let [registerData, setRegisterData] = useState({
     email: "",
     name: "",
@@ -44,6 +48,21 @@ const Registration = () => {
     }
     else if(registerData.password.length <6){
       setRegisterError({...registerError,password: "Password must be greater then 6 Character"})
+    }
+    else{
+      createUserWithEmailAndPassword(auth, registerData.email, registerData.password)
+  .then((userCredential) => {
+    // Signed up 
+    // const user = userCredential.user;
+    // ...
+    console.log("got it",userCredential);
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(error);
+    // ..
+  });
     }
   };
 
