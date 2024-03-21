@@ -7,9 +7,12 @@ import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import { FcGoogle } from "react-icons/fc";
 import { ColorRing } from "react-loader-spinner";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const Registration = () => {
   let [loading, setLoading] = useState(false);
+  const auth = getAuth();
 
   let [registerData, setRegisterData] = useState({
     email: "",
@@ -20,6 +23,8 @@ const Registration = () => {
     email: "",
     password: "",
   });
+
+  let navigate = useNavigate();
 
   let handleChange = (e) => {
     setRegisterData({ ...registerData, [e.target.name]: e.target.value });
@@ -35,12 +40,28 @@ const Registration = () => {
       setRegisterError({ ...registerError, email: "Email Required" });
     } else if (!registerData.password) {
       setRegisterError({ ...registerError, password: "Password Required" });
+    } else {
+      setLoading(true);
+      signInWithEmailAndPassword(
+        auth,
+        registerData.email,
+        registerData.password
+      )
+        .then((userCredential) => {
+          setLoading(false);
+          const user = userCredential.user;
+          navigate("/home")
+        })
+        .catch((error) => {
+          setLoading(false);
+          const errorMessage = error.message;
+        });
     }
   };
-
+  console.log(loading);
   return (
     <Grid container>
-      <Grid h1 xs={6}>
+      <Grid xs={6}>
         <h1 className="pt-[225px] pl-[190px] font-bold text-[34.4px] text-[#11175D]">
           Login to your account!
         </h1>
@@ -74,24 +95,24 @@ const Registration = () => {
           )}
         </div>
         <div className="pt-[33px] pl-[193px]">
-          {!ColorRing &&
-          <Button onClick={handleSubmit} variant="contained" size="large">
-            Login to Continue
-          </Button>
-          }
-            {ColorRing &&
-          <div className="loader">
-          <ColorRing
-          visible={true}
-          height="80"
-          width="80"
-          ariaLabel="color-ring-loading"
-          wrapperStyle={{}}
-          wrapperClass="color-ring-wrapper"
-          colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
-          />
-          </div>
-        }
+          {!loading && (
+            <Button onClick={handleSubmit} variant="contained" size="large">
+              Login to Continue
+            </Button>
+          )}
+          {loading && (
+            <div className="loader">
+              <ColorRing
+                visible={true}
+                height="80"
+                width="80"
+                ariaLabel="color-ring-loading"
+                wrapperStyle={{}}
+                wrapperClass="color-ring-wrapper"
+                colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+              />
+            </div>
+          )}
         </div>
         <div className="font-bold text-[13.34px] pt-8 pl-[193px]">
           <p>
@@ -100,7 +121,7 @@ const Registration = () => {
           </p>
         </div>
       </Grid>
-      <Grid h1 xs={6}>
+      <Grid xs={6}>
         <Images
           src={registrationImg}
           alt="how are you bhai?"

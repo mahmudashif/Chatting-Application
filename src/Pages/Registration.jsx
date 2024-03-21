@@ -5,9 +5,14 @@ import registrationImg from "../assets/registrationImage.png";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
-import { getAuth, createUserWithEmailAndPassword,sendEmailVerification  } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 import { RotatingTriangles } from "react-loader-spinner";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Registration = () => {
   const auth = getAuth();
@@ -23,6 +28,7 @@ const Registration = () => {
     name: "",
     password: "",
   });
+  let navigate = useNavigate();
 
   let [loading, setLoading] = useState(false);
 
@@ -60,22 +66,20 @@ const Registration = () => {
       )
         .then((userCredential) => {
           setLoading(false);
-          sendEmailVerification(auth.currentUser)
-  .then(() => {
-    // Email verification sent!
-    // ...
-  });
-          // toast("Please Check your mail")
-          toast('Please Check your mail')
-          // Signed up
-          // const user = userCredential.user;
-          // ...
+          sendEmailVerification(auth.currentUser).then(() => {
+            navigate("/login");
+            toast("Please Check your mail");
+            console.log("hoise");
+          })
+          .catch((error)=>{
+
+          });
         })
         .catch((error) => {
           setLoading(false);
           const errorCode = error.code;
           const errorMessage = error.message;
-          // ..
+          console.log("hoy nai");
         });
     }
   };
