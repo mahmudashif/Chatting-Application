@@ -1,42 +1,41 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
 import profilePic from "../assets/profilePic.jpg";
 import { AiFillHome } from "react-icons/ai";
 import { FiMessageSquare } from "react-icons/fi";
 import { IoNotificationsSharp } from "react-icons/io5";
 import { IoSettingsOutline } from "react-icons/io5";
+import { FiLogOut } from "react-icons/fi";
 
-const Item = styled(Paper)(({  }) => ({
-}));
+const Item = styled(Paper)(({}) => ({}));
 
 export default function AutoGrid() {
   return (
-    <Box className="boxName">
-      <Grid container spacing={1}>
-        <Grid item xs className="lsdkfjl">
-          <Item>
-            <img className="profilePicture" src={profilePic} alt="" />
-          </Item>
-        </Grid>
+    <div className="w-[186px] bg-[#5F35F5] h-[100vh] rounded-lg">
 
-        <Grid item xs={9}>
-          <Item>
-            <div className="navItem">
-            <AiFillHome className="navItems" />
-            <FiMessageSquare className="navItems" />
-            <IoNotificationsSharp className="navItems" />
-            <IoSettingsOutline className="navItems" />
-            </div>
-          </Item>
-        </Grid>
+    {/* ---------- Navbar work start ---------- */}
 
-        <Grid item xs={2}>
-          <Item>xs</Item>
-        </Grid>
-      </Grid>
-    </Box>
+
+      <div className="pt-[38px]">
+        <img
+          className="h-[80px] w-[80px] rounded-[50%] mx-auto"
+          src={profilePic}
+          alt=""
+        />
+      </div>
+      <div className="mx-auto items-center">
+        <AiFillHome className="text-[60px] mx-auto mt-[78px] text-white" />
+        <FiMessageSquare className="text-[60px] mx-auto mt-[78px] text-white" />
+        <IoNotificationsSharp className="text-[60px] mx-auto mt-[78px] text-white" />
+        <IoSettingsOutline className="text-[60px] mx-auto mt-[78px] text-white" />
+        <FiLogOut className="text-[60px] mx-auto mt-[140px] text-white" />
+      </div>
+
+    {/* ---------- Navbar work end ---------- */}
+
+
+
+    </div>
   );
 }
