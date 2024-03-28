@@ -8,7 +8,7 @@ import Alert from "@mui/material/Alert";
 import { FcGoogle } from "react-icons/fc";
 import { ColorRing } from "react-loader-spinner";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Registration = () => {
   let [loading, setLoading] = useState(false);
@@ -117,7 +117,7 @@ const Registration = () => {
         <div className="font-bold text-[13.34px] pt-8 pl-[193px]">
           <p>
             Don’t have an account ?{" "}
-            <span className="text-[#EA6C00]">Sign up</span>
+            <span className="text-[#EA6C00]"><Link to="/">Sign up</Link></span>
           </p>
         </div>
       </Grid>

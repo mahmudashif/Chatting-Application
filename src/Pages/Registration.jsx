@@ -12,7 +12,7 @@ import {
 } from "firebase/auth";
 import { RotatingTriangles } from "react-loader-spinner";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Registration = () => {
   const auth = getAuth();
@@ -155,7 +155,7 @@ const Registration = () => {
         <div className="font-bold text-[13.34px] pt-8 pl-[193px]">
           <p>
             Already have an account ?{" "}
-            <span className="text-[#EA6C00]">Sign In</span>
+            <span className="text-[#EA6C00]"><Link to="/login">Sign In</Link></span>
           </p>
         </div>
       </Grid>
